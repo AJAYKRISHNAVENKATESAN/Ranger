@@ -1,0 +1,241 @@
+<?xml version="1.0" ?>
+<robot name="Ranger" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- <link name="base_link">
+        <inertial>
+            <origin xyz="1.399642208031704e-17 0.003818957753671419 0.0435006180128437" rpy="0 0 0"/>
+            <mass value="20.403881414687273"/>
+            <inertia ixx="0.075934" iyy="0.072606" izz="0.130842" ixy="-0.0" iyz="-0.003298" ixz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://ranger/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="castor_wheel_link_1">
+        <inertial>
+            <origin xyz="1.9371639760549936e-17 0.0 -0.003706401364222572" rpy="0 0 0"/>
+            <mass value="0.016196307108601853"/>
+            <inertia ixx="0.000036" iyy="0.000036" izz="0.000036" ixy="0.0" iyz="0.0" ixz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="-0.0 -0.07 -0.0099" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/castor_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="-0.0 -0.07 -0.0099" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/castor_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="left_wheel_link_1">
+        <inertial>
+            <origin xyz="-0.014999999999999986 -9.603429163007604e-15 3.2612801348363973e-16" rpy="0 0 0"/>
+            <mass value="1.1652559851246231"/>
+            <inertia ixx="0.000947" iyy="0.000561" izz="0.000561" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.1025 0.04 -0.04" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0.1025 0.04 -0.04" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <link name="right_wheel_link_1">
+        <inertial>
+            <origin xyz="0.015 8.1601392309949e-15 -6.730727086790012e-16" rpy="0 0 0"/>
+            <mass value="1.1652559851246231"/>
+            <inertia ixx="0.000947" iyy="0.000561" izz="0.000561" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="-0.1025 0.04 -0.04" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="-0.1025 0.04 -0.04" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="castor_wheel_joint" type="fixed">
+        <origin xyz="0.0 0.07 0.0099" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="castor_wheel_link_1"/>
+    </joint>
+
+    <joint name="left_wheel_joint" type="continuous">
+        <origin xyz="-0.1025 -0.04 0.04" rpy="0 0 1.5708"/>
+        <parent link="base_link"/>
+        <child link="left_wheel_link_1"/>
+        <axis xyz="-1.0 0.0 0.0"/>
+    </joint>
+
+    <joint name="right_wheel_joint" type="continuous">
+        <origin xyz="0.1025 -0.04 0.04" rpy="0 0 1.5708"/>
+        <parent link="base_link"/>
+        <child link="right_wheel_link_1"/>
+        <axis xyz="1.0 0.0 0.0"/>
+    </joint> -->
+
+    <link name="base_link">
+        <inertial>
+            <origin xyz="0.0035546665659326455 -1.413441635704636e-17 0.048329276632124316" rpy="0 0 0"/>
+            <mass value="20.204678363979987"/>
+            <inertia ixx="0.071598" iyy="0.074917" izz="0.129142" ixy="0.0" iyz="-0.0" ixz="-0.003123"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="right_wheel_link_1">
+        <inertial>
+            <origin xyz="-5.842548667089886e-15 -0.015000000000000027 2.8171909249863347e-15" rpy="0 0 0"/>
+            <mass value="1.4796901398407913"/>
+            <inertia ixx="0.000869" iyy="0.001517" izz="0.000869" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.04 0.1025 -0.045" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0.04 0.1025 -0.045" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="left_wheel_link_1">
+        <inertial>
+            <origin xyz="8.326672684688674e-16 0.015000000000000027 -6.168676680573526e-15" rpy="0 0 0"/>
+            <mass value="1.4796901398407913"/>
+            <inertia ixx="0.000869" iyy="0.001517" izz="0.000869" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.04 -0.1025 -0.045" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0.04 -0.1025 -0.045" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="castor_wheel_link_1">
+        <inertial>
+            <origin xyz="0.0 -5.2835126755093754e-18 -0.0054087491770349536" rpy="0 0 0"/>
+            <mass value="0.05278458497479655"/>
+            <inertia ixx="3e-06" iyy="3e-06" izz="5e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="-0.07 -0.0 -0.0145" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/castor_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="-0.07 -0.0 -0.0145" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/castor_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+<!-- 
+    <link name="lidar_link_1">
+        <inertial>
+            <origin xyz="0.0 0.0 0.015000000000000027" rpy="0 0 0"/>
+            <mass value="1.183752111872634"/>
+            <inertia ixx="0.000562" iyy="0.000562" izz="0.000947" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="-0.05 -0.0 -0.11" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="-0.05 -0.0 -0.11" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://ranger/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link> -->
+
+    <joint name="right_wheel_joint" type="continuous">
+        <origin xyz="-0.04 -0.1025 0.045" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="right_wheel_link_1"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+
+    <joint name="left_wheel_joint" type="continuous">
+        <origin xyz="-0.04 0.1025 0.045" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="left_wheel_link_1"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+
+    <joint name="castor_wheel_joint" type="fixed">
+        <origin xyz="0.07 0.0 0.0145" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="castor_wheel_link_1"/>
+    </joint>
+
+    <!-- <joint name="Rigid 4" type="fixed">
+        <origin xyz="0.05 0.0 0.11" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="lidar_link_1"/>
+    </joint> -->
+
+
+</robot>

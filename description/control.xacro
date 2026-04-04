@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<robot name="AMR" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <ros2_control name="DiffDriveSystem" type="system">
+    <hardware>
+      <plugin>ign_ros2_control/IgnitionSystem</plugin> 
+            <!-- <plugin>gz_ros2_control/GazeboSimSystem</plugin> -->
+    </hardware>
+
+    <joint name="left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>   
+  </ros2_control>
+
+  <gazebo>
+        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+          <parameters>$(find ranger)/config/controller.yaml</parameters>
+        </plugin>
+  </gazebo>
+
+</robot>     

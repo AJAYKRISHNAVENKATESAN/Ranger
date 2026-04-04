@@ -15,21 +15,32 @@ slam_toolbox:
     base_frame: base_link    # matches your URDF
     scan_topic: /scan             # matches your bridge topic
     use_map_saver: true
-    mode: mapping                 # mapping mode (not localization)
+    mode: mapping
+    
+    #TF
+    publish_map_to_odom_tf: true    # ← slam_toolbox owns map→odom
+    tf_buffer_duration: 30.0        # mapping mode (not localization)
 
     # Tuning
     debug_logging: false
     throttle_scans: 1
     transform_publish_period: 0.02
-    map_update_interval: 1.0
+    map_update_interval: 5.0
     resolution: 0.05              # 5cm per cell — good for your room size
-    max_laser_range: 10.0         # matches your LiDAR max range
-    minimum_time_interval: 0.1
-    transform_timeout: 0.1
+    max_laser_range: 8.0         # matches your LiDAR max range
+    minimum_time_interval: 0.2
+    transform_timeout: 0.2
     tf_buffer_duration: 30.0
     stack_size_to_use: 40000000
-    laser_min_range: 0.35   # must match range_min above
-    laser_max_range: 10.0
+    minimum_score: 0.3  
+    laser_min_range: 0.3   # must match range_min above
+    laser_max_range: 8.0
 
     # Loop closure
     enable_interactive_mode: true
+    loop_search_maximum_distance: 3.0
+    do_loop_closing: true
+    loop_match_minimum_chain_size: 10
+    loop_match_maximum_variance_covariance: 3.0
+    loop_match_minimum_response_coarse: 0.35
+    loop_match_minimum_response_fine: 0.45

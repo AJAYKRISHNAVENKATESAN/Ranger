@@ -11,7 +11,7 @@ with LiDAR-based SLAM mapping.
 - Nav2 (in progress)
 
 ## Structure
-- urdf/ — Robot URDF/xacro
+- description/ — Robot URDF/xacro
 - launch/ — Launch files
 - config/ — Controllers, EKF, SLAM config
 - worlds/ — Gazebo SDF worlds
@@ -21,5 +21,5 @@ with LiDAR-based SLAM mapping.
 
 ## Launch
 ```bash
-ros2 launch def_bot gz_sim.launch.py
+ros2 launch ranger gz_sim.launch.py
 ```

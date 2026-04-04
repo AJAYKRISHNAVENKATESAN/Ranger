@@ -13,10 +13,10 @@
 
 # def generate_launch_description():
 
-#     pkg_name = "def_bot"
+#     pkg_name = "ranger"
 #     pkg_path = get_package_share_directory(pkg_name)
 
-#     model_path = os.path.join(pkg_path, "urdf", "def_bot_new.xacro")
+#     model_path = os.path.join(pkg_path, "urdf", "ranger_new.xacro")
 #     controller_yaml_path = os.path.join(pkg_path, "config", "controller.yaml")
 
 #     robot_description = ParameterValue(
@@ -50,7 +50,7 @@
 #         executable="create",
 #         arguments=[
 #             "-topic", "/robot_description",
-#             "-entity", "def_bot",
+#             "-entity", "ranger",
 #             "-z", "0.2"
 #         ],
 #         output="screen",
@@ -122,7 +122,8 @@ from launch.actions import (
     IncludeLaunchDescription,
     SetEnvironmentVariable,
     RegisterEventHandler,
-    TimerAction
+    TimerAction,
+    ExecuteProcess
 )
 from launch_ros.actions import Node
 from launch.substitutions import Command, LaunchConfiguration
@@ -135,9 +136,9 @@ import os
 
 def generate_launch_description():
 
-    pkg_name = "def_bot"
+    pkg_name = "ranger"
     pkg_path = get_package_share_directory(pkg_name)
-    model_path = os.path.join(pkg_path, "urdf", "def_new_bot_final.xacro")
+    model_path = os.path.join(pkg_path, "description", "amr.urdf.xacro")
 
     robot_description = ParameterValue(
         Command(["xacro ", model_path]),
@@ -176,14 +177,27 @@ def generate_launch_description():
     #     output="screen"
     # )
 
-    static_tf_lidar = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
+    # static_tf_lidar = Node(
+    #     package="tf2_ros",
+    #     executable="static_transform_publisher",
+    #     arguments=[
+    #         "0.05", "0.0", "0.105",  # xyz — matches lidar_joint origin in URDF
+    #         "0", "0", "0",            # rpy
+    #         "base_link",              # parent
+    #         "lidar_link_1"            # child — matches /scan frame_id
+    #     ],
+    #     parameters=[{"use_sim_time": True}],
+    #     output="screen"
+    #)
+
+    gz_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
         arguments=[
-            "0.05", "0.0", "0.105",  # xyz — matches lidar_joint origin in URDF
-            "0", "0", "0",            # rpy
-            "base_link",              # parent
-            "lidar_link_1"            # child — matches /scan frame_id
+            "/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan",
+            "/scan/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked",
+            "/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU",
+            "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
         ],
         parameters=[{"use_sim_time": True}],
         output="screen"
@@ -194,7 +208,7 @@ def generate_launch_description():
         executable="create",
         arguments=[
             "-topic", "/robot_description",
-            "-entity", "def_bot",
+            "-entity", "ranger",
             "-z", "0.2"
         ],
         output="screen",
@@ -245,16 +259,27 @@ def generate_launch_description():
         )
     )
 
-    lidar_bridge = Node(
-        package="ros_gz_bridge",
-        executable="parameter_bridge",
-        arguments=[
-            "/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan",
-            "/scan/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked",
-            "/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU"
-        ],
-        parameters=[{"use_sim_time": True}],
-        output="screen"
+    ekf_node =Node(
+                package="robot_localization",
+                executable="ekf_node",
+                name="ekf_filter_node",
+                parameters=[
+                    os.path.join(pkg_path, "config", "ekf.yaml"),
+                    {"use_sim_time": True}
+                ],
+                output="screen"
+    )
+
+    delay_ekf = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=diff_drive_spawner,
+            on_exit=[
+                TimerAction(
+                    period=2.0,
+                    actions=[ekf_node]
+                )
+            ]
+        )
     )
     
     # slam = Node(
@@ -265,6 +290,16 @@ def generate_launch_description():
     #     os.path.join(pkg_path, "config", "mapper_params_online_async.yaml"),
     #     {"use_sim_time": True}
     # ],
+    # output="screen"
+    # )
+
+    # imu_bridge = Node(
+    # package="ros_gz_bridge",
+    # executable="parameter_bridge",
+    # arguments=[
+    #     "/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU",
+    # ],
+    # parameters=[{"use_sim_time": True}],  # ← wall time for bridge
     # output="screen"
     # )
 
@@ -292,41 +327,87 @@ def generate_launch_description():
         )
     )
 
-    ekf_node = Node(
-        package="robot_localization",
-        executable="ekf_node",
-        name="ekf_filter_node",
-        parameters=[
-            os.path.join(pkg_path, "config", "ekf.yaml"),
-            {"use_sim_time": True,
-             "publish_tf": True,
-             "world_frame": "odom",
-            }
-        ],
-        output="screen"
-    )
+    # ekf_node = Node(
+    #     package="robot_localization",
+    #     executable="ekf_node",
+    #     name="ekf_filter_node",
+    #     parameters=[
+    #         os.path.join(pkg_path, "config", "ekf.yaml"),
+    #         {"use_sim_time": True,
+    #         #  "publish_tf": True,
+    #         #  "world_frame": "odom",
+    #         }
+    #     ],
+    #     output="screen"
+    # )
 
-    delay_rviz = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=diff_drive_spawner,
-            on_exit=[                          # ← same level as target_action
-                TimerAction(
-                    period=2.0,
-                    actions=[
-                        Node(
-                            package="rviz2",
-                            executable="rviz2",
-                            arguments=[
-                                "-d", os.path.join(pkg_path, "rviz", "slam.rviz")
-                            ],
-                            parameters=[{"use_sim_time": True}],
-                            output="screen"
-                        )
-                    ]
-                )
-            ]
-        )
-    )
+    # delay_ekf = TimerAction(
+    # period=10.0,    # wait for Gazebo clock to stabilize
+    #     actions=[
+    #         Node(
+    #             package="robot_localization",
+    #             executable="ekf_node",
+    #             name="ekf_filter_node",
+    #             parameters=[
+    #                 os.path.join(pkg_path, "config", "ekf.yaml"),
+    #                 {"use_sim_time": True}
+    #             ],
+    #             output="screen"
+    #         )
+    #     ]
+    # )
+
+    # clock_bridge = Node(
+    # package="ros_gz_bridge",
+    # executable="parameter_bridge",
+    # arguments=[
+    #     "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock"
+    # ],
+    # parameters=[{"use_sim_time": False}],  # clock bridge itself uses wall time
+    # output="screen"
+    # )
+
+
+    # delay_rviz = RegisterEventHandler(
+    #     event_handler=OnProcessExit(
+    #         target_action=diff_drive_spawner,
+    #         on_exit=[                          # ← same level as target_action
+    #             TimerAction(
+    #                 period=2.0,
+    #                 actions=[
+    #                     Node(
+    #                         package="rviz2",
+    #                         executable="rviz2",
+    #                         arguments=[
+    #                             "-d", os.path.join(pkg_path, "rviz", "slam.rviz")
+    #                         ],
+    #                         parameters=[{"use_sim_time": True}],
+    #                         output="screen"
+    #                     )
+    #                 ]
+    #             )
+    #         ]
+    #     )
+    # )
+
+    # disable_diff_tf = RegisterEventHandler(
+    #     event_handler=OnProcessExit(
+    #         target_action=diff_drive_spawner,
+    #         on_exit=[
+    #             TimerAction(
+    #                 period=2.0,
+    #                 actions=[
+    #                     ExecuteProcess(
+    #                         cmd=["ros2", "param", "set",
+    #                             "/diff_cont", "publish_odom_tf", "false"],
+    #                         output="screen"
+    #                     )
+    #                 ]
+    #             )
+    #         ]
+    #     )
+    # )
+
 
     return LaunchDescription([
         SetEnvironmentVariable(
@@ -339,14 +420,12 @@ def generate_launch_description():
         ),
         ignition,
         robot_state_publisher,
-        static_tf_lidar,
+        gz_bridge,
         spawn_robot,
         delay_joint_state_broadcaster,
         delay_diff_drive,
-        lidar_bridge,
-        ekf_node,
+        delay_ekf,
         delay_slam,
-        # delay_rviz,
     ])
 
 

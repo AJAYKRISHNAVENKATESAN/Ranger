@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<robot name="Ranger" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find ranger)/description/materials.xacro" />
+    <xacro:include filename="$(find ranger)/description/control.xacro" />
+    <xacro:include filename="$(find ranger)/description/gazebo.xacro" />
+    <xacro:include filename="$(find ranger)/description/sensors.xacro" />
+    <xacro:include filename="$(find ranger)/description/amr_core.xacro" />
+
+</robot>

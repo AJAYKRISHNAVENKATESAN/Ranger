@@ -1,10 +1,6 @@
-<?xml version="1.0" ?>
+<!-- <?xml version="1.0" ?>
 <robot name="AMR" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find def_bot)/urdf/def_bot_materials.xacro" />
-  <xacro:include filename="$(find def_bot)/urdf/def_bot_gazebo.xacro" />
-
-  
   <!-- <link name="base_footprint"/>
 
   <joint name="base_joint" type="fixed">
@@ -22,14 +18,14 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -43,14 +39,14 @@
       <visual>
         <origin xyz="0.055 0.1025 -0.04" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin xyz="0.055 0.1025 -0.04" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/right_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -64,14 +60,14 @@
       <visual>
         <origin xyz="0.055 -0.1025 -0.04" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin xyz="0.055 -0.1025 -0.04" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/left_wheel_link_1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -85,14 +81,14 @@
       <visual>
         <origin xyz="-0.05 -0.0 -0.105" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="silver"/>
       </visual>
       <collision>
         <origin xyz="-0.05 -0.0 -0.105" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://def_bot/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://ranger/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -117,30 +113,30 @@
       <child link="lidar_link_1"/>
     </joint>
 
-    <ros2_control name="DiffDriveSystem" type="system">
-            <hardware>
+            <ros2_control name="DiffDriveSystem" type="system">
+              <hardware>
                 <plugin>ign_ros2_control/IgnitionSystem</plugin> 
               <!-- <plugin>gz_ros2_control/GazeboSimSystem</plugin> -->
-            </hardware>
+              </hardware>
 
-            <joint name="left_wheel_joint">
+              <joint name="left_wheel_joint">
                 <command_interface name="velocity"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-            </joint>
+              </joint>
 
-            <joint name="right_wheel_joint">
+              <joint name="right_wheel_joint">
                 <command_interface name="velocity"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-            </joint>   
-        </ros2_control>
+              </joint>   
+            </ros2_control>
 
       <!-- <gazebo>
             <plugin filename="libign_ros2_control-system.so"
                     name="ign_ros2_control::IgnitionROS2ControlPlugin">
-                <parameters>$(find def_bot)/config/controller.yaml</parameters>
+                <parameters>$(find ranger)/config/controller.yaml</parameters>
             </plugin>
       </gazebo> -->
 
-</robot>
+</robot> -->
