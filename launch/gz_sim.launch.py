@@ -225,7 +225,7 @@ def generate_launch_description():
         parameters=[{"use_sim_time": True}]
     )
 
-    diff_drive_spawner = Node(
+    diff_cont_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
@@ -255,7 +255,7 @@ def generate_launch_description():
     delay_diff_drive = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
-            on_exit=[diff_drive_spawner]
+            on_exit=[diff_cont_spawner]
         )
     )
 
@@ -272,7 +272,7 @@ def generate_launch_description():
 
     delay_ekf = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=diff_drive_spawner,
+            target_action=diff_cont_spawner,
             on_exit=[
                 TimerAction(
                     period=2.0,
@@ -305,7 +305,7 @@ def generate_launch_description():
 
     delay_slam = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=diff_drive_spawner,
+            target_action=diff_cont_spawner,
             on_exit=[
                 TimerAction(
                     period=5.0,   # let odometry settle first

@@ -20,10 +20,10 @@
     </joint>   
   </ros2_control>
 
-  <gazebo>
+  <!-- <gazebo>
         <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
           <parameters>$(find ranger)/config/controller.yaml</parameters>
         </plugin>
-  </gazebo>
+  </gazebo> -->
 
 </robot>     
