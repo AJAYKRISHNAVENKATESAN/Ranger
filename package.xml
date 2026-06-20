@@ -3,7 +3,7 @@
 <package format="3">
   <name>ranger</name>
   <version>0.0.0</version>
-  <description>4-wheeled differential drive AMR for indoor SLAM and autonomous navigation</description>
+  <description>Differential drive AMR (2 drive wheels + castor) for indoor SLAM and autonomous navigation</description>
   <maintainer email="aj.grizzy@gmail.com">Ajaykrishna Venkatesan</maintainer>
   <license>Apache-2.0</license>
 
