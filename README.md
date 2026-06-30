@@ -58,6 +58,7 @@ ros2 launch ranger gz_sim.launch.py
 # 5. Visualise in RViz (separate terminal)
 ros2 launch ranger display.launch.py
 ```
+<img width="727" height="551" alt="Image" src="https://github.com/user-attachments/assets/01a86b9c-adf9-44dc-8951-655dbe317810" />
 
 ## Part of Project Drishti
 
