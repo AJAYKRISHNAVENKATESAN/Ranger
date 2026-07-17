@@ -10,8 +10,8 @@ A differential drive AMR with two side wheels and a front castor, designed for i
 
 | Component | Technology |
 |-----------|-----------|
-| ROS2 distro | Jazzy |
-| Simulator | Ignition Gazebo |
+| ROS2 distro | Humble |
+| Simulator | Ignition Gazebo (Fortress) |
 | SLAM | slam_toolbox (online async) |
 | Localisation | robot_localization (EKF) |
 | Navigation | Nav2 (in progress) |
@@ -59,6 +59,27 @@ ros2 launch ranger gz_sim.launch.py
 ros2 launch ranger display.launch.py
 ```
 <img width="727" height="551" alt="Image" src="https://github.com/user-attachments/assets/01a86b9c-adf9-44dc-8951-655dbe317810" />
+
+## Docker development environment
+
+A standalone dev container is provided under `docker/` — ROS 2 Humble + Gazebo
+Fortress (Ignition), plus `ros2_control`, `robot_localization`, and `slam_toolbox`.
+
+```bash
+cd docker
+xhost +local:root          # allow the container to use your display
+docker compose up -d --build
+docker exec -it ranger-dev bash
+
+# inside the container
+cb   # colcon build --symlink-install
+cs   # source install/setup.bash
+ros2 launch ranger gz_sim.launch.py
+```
+
+Requires an NVIDIA GPU + `nvidia-container-toolkit` on the host for hardware-accelerated
+RViz/Gazebo rendering. Build artifacts persist across restarts in the
+`ranger_build`/`ranger_install`/`ranger_log` named volumes.
 
 ## Part of Project Drishti
 
