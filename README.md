@@ -1,6 +1,9 @@
 # Ranger — Autonomous Mobile Robot (ROS2)
 
-A differential drive AMR with two side wheels and a front castor, designed for indoor SLAM navigation and autonomous exploration, simulated in Ignition Gazebo.
+Differential-drive AMR with two side wheels and a front castor, mapped via
+LiDAR SLAM (`slam_toolbox`) and EKF localization (`robot_localization`), with
+Nav2 autonomous navigation in progress. Built with ROS 2 Humble, simulated in
+Ignition Gazebo.
 
 ## Demo
 
